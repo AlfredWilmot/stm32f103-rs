@@ -6,7 +6,6 @@
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 
 Vagrant.configure('2') do |config|
-
   # Ensure the 'vagrant-libvirt' plugin is installed:
   config.vagrant.plugins = 'vagrant-libvirt'
 
@@ -30,7 +29,7 @@ Vagrant.configure('2') do |config|
   # make the ST-LINK acessible to the guest:
   # (host) lsusb | grep ST-LINK
   # Bus 001 Device 112: ID 0483:3748 STMicroelectronics ST-LINK/V2
-  libvirt.usb :vendor => '0x0483', :product => '0x3748'
+  libvirt.usb vendor: '0x0483', product: '0x3748'
 
   # using a debian bookworm guest
   config.vm.box = 'generic/debian12'
