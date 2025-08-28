@@ -3,7 +3,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
+#ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 
 Vagrant.configure('2') do |config|
   # Ensure the 'vagrant-libvirt' plugin is installed:
@@ -11,8 +11,6 @@ Vagrant.configure('2') do |config|
 
   # indicate the preferred provider
   config.vm.provider 'libvirt'
-
-  config.ssh.insert_key = false
 
   # guest resource allocation
   config.vm.provider 'libvirt' do |libvirt|
@@ -33,4 +31,8 @@ Vagrant.configure('2') do |config|
 
   # using a debian bookworm guest
   config.vm.box = 'generic/debian12'
+
+  config.vm.provision 'ansible' do |ansible|
+    ansible.playbook = './playbook.yml'
+  end
 end
