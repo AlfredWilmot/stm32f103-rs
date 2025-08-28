@@ -3,7 +3,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-#ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 
 Vagrant.configure('2') do |config|
   # Ensure the 'vagrant-libvirt' plugin is installed:
