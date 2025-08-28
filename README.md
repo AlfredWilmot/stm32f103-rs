@@ -2,7 +2,6 @@
 
 > [!WARNING]
 > WORK IN PROGRESS
-
 Following along with [this](https://docs.rust-embedded.org/book/intro/install.html)
 guide do see how far it'll take me.
 
@@ -61,7 +60,7 @@ This is to allows `OpenOCD` to be used by non-root users.
 
 - _(disconnect and reconnect ST-LINK)_
 
-- verify extended device access permissions:
+- check the file-access control list for the device to verify extended device access permissions:
     ```bash
     lsusb | grep ST-LINK
     # Bus 001 Device 112: ID 0483:3748 STMicroelectronics ST-LINK/V2
@@ -72,7 +71,8 @@ This is to allows `OpenOCD` to be used by non-root users.
 
     getfacl "${USB_PATH}" | grep user
     # user::rw-
-    # user:<THE_CURREN_USER>:rw-
+    # user:<YOUR_USER>:rw-
+    #           ^indicates YOUR_USER is able to access the device directly
     ```
 
 ## References
