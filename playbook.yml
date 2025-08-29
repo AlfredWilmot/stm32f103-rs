@@ -1,12 +1,16 @@
 # Based on this source:
 # https://waylonwalker.com/install-rust/
 ---
-- name: Provision a debian VM for STM32f103 development using rust
+- name: Setup a debian VM development environment for the STM32f103
   hosts: all
+  become_user: "{{ ansible_user }}"
+  become: true
   vars:
     rustup_script_tag: "1.28.2"
-    rustup_script_url: "https://raw.githubusercontent.com/rust-lang/rustup/refs/tags/{{ rustup_script_tag }}/rustup-init.sh"
+    rustup_script_str: "rustup-init.sh"
+    rustup_script_url: "https://raw.githubusercontent.com/rust-lang/rustup/refs/tags/{{ rustup_script_tag }}/{{ rustup_script_str }}"
     rustup_script_sha: "17247e4bcacf6027ec2e11c79a72c494c9af69ac8d1abcc1b271fa4375a106c2"
+    rustup_script_dst: "/home/{{ ansible_user }}/{{ rustup_script_str }}"
 
   pre_tasks:
     - name: Update apt repositories
@@ -16,25 +20,25 @@
         update_cache: true
 
   tasks:
+
     - name: Check if cargo is installed
       ansible.builtin.shell:
         cmd: command -v cargo &> /dev/null
       register: cargo_exists
       ignore_errors: true
-      failed_when: cargo_exists.rc != 0
+      changed_when: cargo_exists.rc != 0
 
-    - name: Download rustup-init.sh installer if cargo is missing
-      when: cargo_exists is failed
+    - name: "Download installer: {{ rustup_script_str }}"
       ansible.builtin.get_url:
         url: "{{ rustup_script_url }}"
-        dest: /tmp/rustup-init.sh
+        dest: "{{ rustup_script_dst }}"
         mode: '0755'
         force: true
         checksum: "sha256:{{ rustup_script_sha }}"
 
-    - name: Run rustup-init.sh installer if downloaded
-      when: cargo_exists is failed
-      ansible.builtin.command: /tmp/rustup-init.sh -y
+    - name: "Run installer: {{ rustup_script_str }}"
+      ansible.builtin.command: "{{ rustup_script_dst }} -y"
+      changed_when: cargo_exists is failed
 
     - name: Install build dependencies
       become_user: root
