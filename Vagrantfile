@@ -23,7 +23,7 @@ Vagrant.configure('2') do |config|
     #
     # (host) lsusb | grep ST-LINK
     # Bus 001 Device 112: ID 0483:3748 STMicroelectronics ST-LINK/V2
-    libvirt.usb vendor: '0x0483', product: '0x3748'
+    libvirt.usb vendor: '0x0483', product: '0x3748', startupPolicy: "optional"
   end
 
   # prefer a user-defined synced folder

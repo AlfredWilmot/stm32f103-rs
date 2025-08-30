@@ -27,7 +27,7 @@ Linux debian 6.1.0-37-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.140-1 (2025-05-22)
 
 - installing debugging utilities:
     ```bash
-    sudo apt install -y gdb-arm-none-eabi openocd qemu-system-arm
+    sudo apt install -y gdb-arm-none-eabi openocd qemu-system-arm usbutils
     ```
 
 ## setup udev rules
