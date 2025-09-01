@@ -102,6 +102,7 @@
         install_recommends: true
 
     - name: Install probe-rs, cargo-flash, and cargo-embed
+      # https://probe.rs/docs/getting-started/installation/
       ansible.builtin.shell: |-
         . {{ cargo_env }}
         cargo install probe-rs-tools --locked
