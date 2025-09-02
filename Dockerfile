@@ -50,3 +50,9 @@ RUN cargo install probe-rs-tools --locked
 
 # (install stlink-tools)[https://github.com/stlink-org/stlink]
 RUN apt install -y stlink-tools
+
+# Convenience util for running openocd against an STM32f103 "blue-pill"
+COPY --chmod=755 <<EOF /usr/bin/ocd
+#!/usr/bin/env bash
+openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \$@
+EOF
