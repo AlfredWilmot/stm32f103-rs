@@ -5,7 +5,33 @@
 Following along with [this](https://docs.rust-embedded.org/book/intro/install.html)
 guide do see how far it'll take me.
 
-## Preparing Development Host
+## Notes
+
+Info regarding `STM32F103C8`:
+```text
+Manufacturer:
+ - STMicroelectronics
+
+Family:
+ - STM32F1 Series
+
+Variant
+ - STM32F103C8
+
+Cores
+ - armv7m
+
+Memory Regions:
+ - [BANK_1 0x8000000 - 0x8010000]
+ - [SRAM 0x20000000 - 0x20005000]
+```
+
+- https://github.com/stm32-rs/stm32-rs
+- https://codezup.com/programming-stm32-microcontrollers-with-rust-embedded-guide/
+- https://github.com/knurling-rs/app-template
+
+
+## Preparing Development Host (deprecated in favor of setup scripts/ `Dockerfile`)
 ```text
 Debian GNU/Linux 12 (bookworm)
 Linux debian 6.1.0-37-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.140-1 (2025-05-22) x86_64 GNU/Linux
