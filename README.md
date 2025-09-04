@@ -103,4 +103,7 @@ This is to allows `OpenOCD` to be used by non-root users.
 
 ## References
 - [Cortex-M3 docs](https://developer.arm.com/Processors/Cortex-M3)
+- STM32F103C8T6:
+  - [store page](https://www.digikey.co.uk/en/products/detail/stmicroelectronics/STM32F103C8T6/1646338)
+  - [datasheet](https://www.st.com/resource/en/datasheet/stm32f103cb.pdf)
 
