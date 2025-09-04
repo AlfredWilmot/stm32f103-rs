@@ -1,8 +1,19 @@
 FROM rust:1.89.0-slim-trixie@sha256:f9ab60da9c7296b7b1d4c9bc89b56900ca86ee4994133d5431d08d3565f02bac
 SHELL ["/bin/bash", "-c"]
 
+ARG USER
+ARG USER_ID
+ARG GROUP
+
 # Cross-compile to Cortex-M3 (CPU architecture used by STM32F103)
 ENV TOOLCHAIN=thumbv7m-none-eabi
+
+# create a group and user that the host has granted access the stlink
+RUN <<EOF
+useradd -m -u ${USER_ID} ${USER}
+groupadd ${GROUP}
+usermod -aG ${GROUP} ${USER}
+EOF
 
 RUN apt update
 
@@ -56,3 +67,5 @@ COPY --chmod=755 <<EOF /usr/bin/ocd
 #!/usr/bin/env bash
 openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \$@
 EOF
+
+USER ${USER}
