@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
-set -ex -o pipefail
+# fail-fast, propagate error-codes through pipelines
+set -e -o pipefail
 
-find . -name "*.sh" -exec shellcheck {} \;
+run_step() {
+  green='\033[0;32m'
+  reset='\033[0m\n'
+  printf "${green}%s${reset}" "$*"
+  eval "$*"
+}
+
+# check shell-scripts
+run_step "find . -name '*.sh' -exec shellcheck {} \;"
