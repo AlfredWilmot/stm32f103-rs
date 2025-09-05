@@ -43,14 +43,17 @@ CARGO_GENERATE_DEPS=(
   libssl-dev
   pkg-config
 )
-
+MCU_BUILD_FLASH_TOOLS=(
+  binutils-arm-none-eabi
+  stlink-tools # (tools for interacting with STLINK via CLI)[https://github.com/stlink-org/stlink]
+)
 
 apt install -y \
   "${CORE_GLIBC_BUILD_DEPS[@]}" \
   "${HW_DEBUGGING_UTILS[@]}" \
   "${PROBE_RS_TOOLS_DEPS[@]}" \
   "${CARGO_GENERATE_DEPS[@]}" \
-  stlink-tools # (tools for interacting with STLINK via CLI)[https://github.com/stlink-org/stlink]
+  "${MCU_BUILD_FLASH_TOOLS}"
 EOF
 
 USER ${USER}
@@ -66,3 +69,5 @@ RUN cargo install cargo-generate
 
 # (install probe-rs, cargo-flash, and cargo-embed)[https://probe.rs/docs/getting-started/installation/]
 RUN cargo install probe-rs-tools --locked
+
+USER ${USER}
