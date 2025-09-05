@@ -1,3 +1,5 @@
+//! DISCLAIMER: THIS CODE-SNIPPET IS DERIVED FROM https://github.com/stm32-rs/stm32f1xx-hal/blob/master/examples/blinky.rs
+//!
 //! Blinks an LED
 //!
 //! This assumes that a LED is connected to pc13 as is the case on the blue pill board.
@@ -34,7 +36,8 @@ fn main() -> ! {
     let mut led = gpioc.pc13.into_push_pull_output(&mut gpioc.crh);
     // Configure the syst timer to trigger an update every second
     let mut timer = Timer::syst(cp.SYST, &rcc.cfgr.freeze(&mut flash.acr)).counter_hz();
-    timer.start(1.Hz()).unwrap();
+    timer.start(10.Hz()).unwrap();
+    timer.configure(clocks);
 
     // Wait for the timer to trigger an update and change the state of the LED
     loop {
