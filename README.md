@@ -5,6 +5,8 @@
 Following along with [this](https://docs.rust-embedded.org/book/intro/install.html)
 guide do see how far it'll take me.
 
+FOLLOW INSTRUCTIONS HERE: https://github.com/stm32-rs/stm32f1xx-hal
+
 ## Notes
 
 Info regarding `STM32F103C8`:
@@ -106,4 +108,5 @@ This is to allows `OpenOCD` to be used by non-root users.
 - STM32F103C8T6:
   - [store page](https://www.digikey.co.uk/en/products/detail/stmicroelectronics/STM32F103C8T6/1646338)
   - [datasheet](https://www.st.com/resource/en/datasheet/stm32f103cb.pdf)
+- [minimizing rust binary footprint](https://github.com/johnthagen/min-sized-rust/blob/main/README.md)
 

@@ -15,6 +15,9 @@ groupadd ${GROUP}
 usermod -aG ${GROUP} ${USER}
 EOF
 
+WORKDIR /home/${USER}
+RUN chown -R ${USER}:${GROUP} /home/${USER}
+
 RUN apt update
 
 # install apt package deps
@@ -40,12 +43,17 @@ CARGO_GENERATE_DEPS=(
   libssl-dev
   pkg-config
 )
+
+
 apt install -y \
   "${CORE_GLIBC_BUILD_DEPS[@]}" \
   "${HW_DEBUGGING_UTILS[@]}" \
   "${PROBE_RS_TOOLS_DEPS[@]}" \
-  "${CARGO_GENERATE_DEPS[@]}"
+  "${CARGO_GENERATE_DEPS[@]}" \
+  stlink-tools # (tools for interacting with STLINK via CLI)[https://github.com/stlink-org/stlink]
 EOF
+
+USER ${USER}
 
 # install toolchain
 RUN rustup target add "${TOOLCHAIN}"
@@ -58,14 +66,3 @@ RUN cargo install cargo-generate
 
 # (install probe-rs, cargo-flash, and cargo-embed)[https://probe.rs/docs/getting-started/installation/]
 RUN cargo install probe-rs-tools --locked
-
-# (install stlink-tools)[https://github.com/stlink-org/stlink]
-RUN apt install -y stlink-tools
-
-# Convenience util for running openocd against an STM32f103 "blue-pill"
-COPY --chmod=755 <<EOF /usr/bin/ocd
-#!/usr/bin/env bash
-openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \$@
-EOF
-
-USER ${USER}
