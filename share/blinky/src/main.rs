@@ -37,7 +37,6 @@ fn main() -> ! {
     // Configure the syst timer to trigger an update every second
     let mut timer = Timer::syst(cp.SYST, &rcc.cfgr.freeze(&mut flash.acr)).counter_hz();
     timer.start(10.Hz()).unwrap();
-    timer.configure(clocks);
 
     // Wait for the timer to trigger an update and change the state of the LED
     loop {
