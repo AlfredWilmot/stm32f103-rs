@@ -10,15 +10,13 @@ ENV TOOLCHAIN=thumbv7m-none-eabi
 
 # create a group and user that the host has granted access the stlink
 RUN <<EOF
-useradd -m -u ${USER_ID} ${USER}
+useradd -l -m -u ${USER_ID} ${USER}
 groupadd ${GROUP}
 usermod -aG ${GROUP} ${USER}
 EOF
 
 WORKDIR /home/${USER}
 RUN chown -R ${USER}:${GROUP} /home/${USER}
-
-RUN apt update
 
 # install apt package deps
 RUN <<EOF
@@ -47,27 +45,27 @@ MCU_BUILD_FLASH_TOOLS=(
   binutils-arm-none-eabi
   stlink-tools # (tools for interacting with STLINK via CLI)[https://github.com/stlink-org/stlink]
 )
-
-apt install -y \
+apt-get update
+apt-get install -y --no-install-recommends \
   "${CORE_GLIBC_BUILD_DEPS[@]}" \
   "${HW_DEBUGGING_UTILS[@]}" \
   "${PROBE_RS_TOOLS_DEPS[@]}" \
   "${CARGO_GENERATE_DEPS[@]}" \
-  "${MCU_BUILD_FLASH_TOOLS}"
+  "${MCU_BUILD_FLASH_TOOLS[@]}"
+rm -rf /var/lib/apt/lists
 EOF
 
 USER ${USER}
 
+RUN <<EOF
 # install toolchain
-RUN rustup target add "${TOOLCHAIN}"
-
+rustup target add "${TOOLCHAIN}"
 # install llvm tools for inspecting binaries
-RUN cargo install cargo-binutils && rustup component add llvm-tools
-
+cargo install cargo-binutils && rustup component add llvm-tools
 # install cargo-generate for project templating
-RUN cargo install cargo-generate
-
+cargo install cargo-generate
 # (install probe-rs, cargo-flash, and cargo-embed)[https://probe.rs/docs/getting-started/installation/]
-RUN cargo install probe-rs-tools --locked
+cargo install probe-rs-tools --locked
+EOF
 
 USER ${USER}
