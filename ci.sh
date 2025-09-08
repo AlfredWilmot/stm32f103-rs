@@ -12,3 +12,5 @@ run_step() {
 
 # check shell-scripts
 run_step "find . -name '*.sh' -exec shellcheck {} \;"
+# check Dockerfile
+run_step "docker run --rm -i ghcr.io/hadolint/hadolint:v2.13.1-alpine < Dockerfile"
