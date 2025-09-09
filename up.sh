@@ -8,6 +8,7 @@ STM32_IMG="stm32:main"
 USB_PATH="$(lsusb | grep ST-LINK | awk '{print "/dev/bus/usb/"$2"/"$4}' | tr -d ':'| sed -n '1p')"
 USER="stm32"
 SHARE_DIR="./share"
+GDB_PORT=3333
 declare -a RUN_ARGS BUILD_ARGS
 
 USER_ID="$(id -u)"
@@ -35,8 +36,10 @@ chown -R "${USER_ID}:${USER_ID}" "${SHARE_DIR}"
 
 if [ -n "${USB_PATH}" ]; then
   RUN_ARGS+=(
+    "--name ${USER}"
     "--device=${USB_PATH}"
     "--env USB_PATH=${USB_PATH}"
+    "--network host"
   )
 fi
 
