@@ -7,8 +7,8 @@ set -ex
 STM32_IMG="stm32:main"
 USB_PATH="$(lsusb | grep ST-LINK | awk '{print "/dev/bus/usb/"$2"/"$4}' | tr -d ':'| sed -n '1p')"
 USER="stm32"
-SHARE_DIR="./share"
-GDB_PORT=3333
+SHARE_DIR="./blinky"
+BUILD_TARGET="final"  # determines how much of the Dockerfile we want to build
 declare -a RUN_ARGS BUILD_ARGS
 
 USER_ID="$(id -u)"
@@ -26,6 +26,7 @@ BUILD_ARGS+=(
   "--build-arg=USER=${USER}"
   "--build-arg=GROUP=${GROUP}"
   "--build-arg=USER_ID=${USER_ID}"
+  "--target ${BUILD_TARGET}"
 )
 BUILD_CMD="${BUILD_PREFIX} ${BUILD_ARGS[*]} ."
 eval "${BUILD_CMD}"
@@ -45,7 +46,7 @@ fi
 
 RUN_PREFIX="docker run --rm -it --privileged --cap-add SYS_ADMIN"
 RUN_ARGS+=(
-  "-v $(pwd)/share:/home/${USER}/share"
+  "-v $(pwd)/${SHARE_DIR}:/home/${USER}/${SHARE_DIR}"
   "--user=${USER}:${PLUGDEV_GID}"
 )
 RUN_EXTRA="${*}"
