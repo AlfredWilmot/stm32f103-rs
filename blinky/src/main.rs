@@ -6,6 +6,18 @@
 //!
 //! Note: Without additional hardware, PC13 should not be used to drive an LED, see page 5.1.2 of
 //! the reference manual for an explanation. This is not an issue on the blue pill.
+//!
+//!
+//! TODO:
+//! incorporate serial over USB; expose a basic CLI for controlling the rate
+//! at which the on-board LED blinks
+//!
+//! the CLI tool should have the following commands:
+//! -> help (displays a help menu; this is the default option for invalid input)
+//! -> set x (set the flash rate)
+//! -> get (return the current flash rate)
+//! -> off (deactivate the LED)
+//! -> on (activate the LED)
 
 #![deny(unsafe_code)]
 #![no_std]
