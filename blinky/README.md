@@ -2,7 +2,7 @@
 
 An area to experiment with embedded rust development.
 
-> ![NOTE]
+> [!NOTE]
 > This project was initially derived from the
 > [stm32f1xx-hal](https://github.com/stm32-rs/stm32f1xx-hal/) crate,
 > to serve as a starting point for my embedded development.
@@ -13,7 +13,7 @@ An area to experiment with embedded rust development.
 > other tooling for flashing/debugging my stm32 target
 > (see the project `Dockerfile` for more information).
 
-> ![WARNING]
+> [!WARNING]
 > Even though the `Dockerfile` provides the development environment, and tooling
 > to interface with the embedded target, you will still need to include the
 > relevant toolchain on your host for `rust-analyzer` to work properly
