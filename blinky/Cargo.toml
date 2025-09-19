@@ -10,7 +10,9 @@ cortex-m = "0.7.6"
 cortex-m-rt = "0.7.1"
 # Panic behaviour, see https://crates.io/keywords/panic-impl for alternatives
 panic-halt = "0.2.0"
+usbd-serial = "0.2.2"
+stm32-usbd = "0.8.0"
 
 [dependencies.stm32f1xx-hal]
 version = "0.10.0"
-features = ["rt", "stm32f103", "medium", "stm32-usbd"]
+features = ["rt", "stm32f103", "medium"]
